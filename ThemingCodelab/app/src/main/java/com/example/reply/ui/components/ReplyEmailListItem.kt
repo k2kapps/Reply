@@ -16,6 +16,12 @@
 
 package com.example.reply.ui.components
 
+import android.app.Activity
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,6 +31,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -33,13 +40,29 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.appwritedemoapplication.ui.Database.DatabaseViewModel
 import com.example.reply.R
 import com.example.reply.data.Email
+import com.example.reply.ui.Client
+import com.example.reply.ui.Config
+import com.example.reply.ui.MainActivity
+import com.example.reply.ui.ReplyHomeViewModel
+import io.appwrite.exceptions.AppwriteException
+import io.appwrite.extensions.toJson
+import io.appwrite.services.Databases
+import kotlinx.coroutines.launch
+
+data class user(val name: String, val age: Int)
 
 @Composable
 fun ReplyEmailListItem(
@@ -48,11 +71,13 @@ fun ReplyEmailListItem(
     modifier: Modifier = Modifier,
     navigateToDetail: (Long) -> Unit
 ) {
+    val vm = viewModel<DatabaseViewModel>()
+    val context = LocalContext.current
     Card(
-        modifier =  modifier
+        modifier = modifier
             .padding(horizontal = 16.dp, vertical = 4.dp)
             .semantics { selected = isSelected }
-            .clickable { navigateToDetail(email.id) },
+        //.clickable { navigateToDetail(email.id) },
     ) {
         Column(
             modifier = Modifier
@@ -76,9 +101,20 @@ fun ReplyEmailListItem(
                     Text(
                         text = email.createdAt,
                     )
+                    //vm.getDoc("64b8adeb6aa220fa2a16")
+                    //Log.i("getting",vm.dialogText.value.toString())
+                    Text(
+                        text = vm.tx1
+                        //text="node"
+                    )
                 }
+                Button(onClick = { vm.setval() }) {
+                    Text(text = "Button")
+                }
+                /*
+
                 IconButton(
-                    onClick = { /*Click Implementation*/ },
+                    onClick = { Toast.makeText(context, "Succuss...", Toast.LENGTH_SHORT).show() },
                     modifier = Modifier
                         .clip(CircleShape)
 
@@ -87,7 +123,7 @@ fun ReplyEmailListItem(
                         imageVector = Icons.Default.StarBorder,
                         contentDescription = stringResource(id = R.string.description_favorite),
                     )
-                }
+                }*/
             }
 
             Text(
@@ -102,3 +138,5 @@ fun ReplyEmailListItem(
         }
     }
 }
+
+

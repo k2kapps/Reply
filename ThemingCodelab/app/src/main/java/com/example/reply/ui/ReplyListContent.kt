@@ -62,6 +62,7 @@ fun ReplyInboxScreen(
             navigateToDetail = navigateToDetail
         )
 
+        /*
         LargeFloatingActionButton(
             onClick = { /*Click Implementation*/ },
             modifier = Modifier
@@ -73,7 +74,7 @@ fun ReplyInboxScreen(
                 contentDescription = stringResource(id = R.string.edit),
                 modifier = Modifier.size(28.dp)
             )
-        }
+        }*/
 
     }
 }

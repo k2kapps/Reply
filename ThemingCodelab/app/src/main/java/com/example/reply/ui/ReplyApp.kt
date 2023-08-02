@@ -27,12 +27,15 @@ import androidx.compose.material.icons.outlined.ChatBubbleOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import com.example.reply.R
 
 @Composable
@@ -84,7 +87,15 @@ fun ReplyAppContent(
                             imageVector = replyDestination.selectedIcon,
                             contentDescription = stringResource(id = replyDestination.iconTextId)
                         )
+                    },
+                    alwaysShowLabel = true,
+                    label = {
+                        Text(
+                            text = replyDestination.iconLabel,
+                            fontWeight = FontWeight.SemiBold,
+                        )
                     }
+
                 )
             }
         }
@@ -103,7 +114,8 @@ data class ReplyTopLevelDestination(
     val route: String,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
-    val iconTextId: Int
+    val iconTextId: Int,
+    val iconLabel: String
 )
 
 val TOP_LEVEL_DESTINATIONS = listOf(
@@ -111,24 +123,28 @@ val TOP_LEVEL_DESTINATIONS = listOf(
         route = ReplyRoute.INBOX,
         selectedIcon = Icons.Default.Inbox,
         unselectedIcon = Icons.Default.Inbox,
-        iconTextId = R.string.tab_inbox
+        iconTextId = R.string.tab_inbox,
+        iconLabel = "Listing"
     ),
     ReplyTopLevelDestination(
         route = ReplyRoute.ARTICLES,
         selectedIcon = Icons.Default.Article,
         unselectedIcon = Icons.Default.Article,
-        iconTextId = R.string.tab_article
+        iconTextId = R.string.tab_article,
+        iconLabel = "Mylist"
     ),
     ReplyTopLevelDestination(
         route = ReplyRoute.DM,
         selectedIcon = Icons.Outlined.ChatBubbleOutline,
         unselectedIcon = Icons.Outlined.ChatBubbleOutline,
-        iconTextId = R.string.tab_inbox
+        iconTextId = R.string.tab_inbox,
+        iconLabel = "Message"
     ),
     ReplyTopLevelDestination(
         route = ReplyRoute.GROUPS,
         selectedIcon = Icons.Default.People,
         unselectedIcon = Icons.Default.People,
-        iconTextId = R.string.tab_article
+        iconTextId = R.string.tab_article,
+        iconLabel = "Setting"
     )
 )

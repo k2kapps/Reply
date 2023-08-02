@@ -19,6 +19,7 @@ package com.example.reply.ui
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -26,18 +27,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.example.appwritedemoapplication.ui.Database.DatabaseViewModel
 import com.example.reply.data.LocalEmailsDataProvider
-
 
 class MainActivity : ComponentActivity() {
 
+    companion object {
+        var globalVar = "t"
+    }
+
     private val viewModel: ReplyHomeViewModel by viewModels()
-
+    private val vm by viewModels<DatabaseViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
+        super.onCreate(savedInstanceState)
         setContent {
             val uiState by viewModel.uiState.collectAsState()
+
             ReplyApp(
                 replyHomeUIState = uiState,
                 closeDetailScreen = {
@@ -48,6 +56,23 @@ class MainActivity : ComponentActivity() {
                 }
             )
         }
+
+        /*
+        Client.create(applicationContext)
+        vm.d2.observe(this,Observer{
+            Log.i("lplplplplp",it.toString())
+            vm.s2 = it.toString()
+            globalVar=it.toString()
+        })
+        vm.getDoc("64b8adeb6aa220fa2a16");
+        Log.i("nnnnnnnnnn",vm.dialogText.value.toString())
+        //increment1()*/
+    }
+
+    private fun increment1(){
+        vm.d2.value =  "iiiiii"
+        Thread.sleep(5000)
+        vm.d2.value =  "kkkkkkkkk"
     }
 }
 
